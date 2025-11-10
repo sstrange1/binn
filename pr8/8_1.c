@@ -1,15 +1,3 @@
-/*8.1 Implement and compare the total head movement for a given sequence of disk requests using two 
-specific scheduling algorithms: 
-• System Setup: A disk with cylinders numbered 0 to 499. 
-• Current Head Position: 85 
-• Pending Requests (FIFO order): 10, 229, 39, 400, 18, 145, 120, 480, 20, 250 
-• Algorithms to Implement: 
-• C-SCAN (Assume initial movement is towards 499). 
-• C-LOOK (Assume initial movement is towards 499). 
-• Output: Calculate and display the sequence of cylinder movements and the Average Seek Distance 
-for both C-SCAN and C-LOOK. Conclude which algorithm performed better for this request set. */
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,8 +16,6 @@ void sort(int arr[], int n) {
     }
 }
 
-// Function for C-SCAN scheduling
-// Motion : from current head to end (499), jump to start (0), then to remaining requests
 int cscan(int requests[], int n, int head) {
     int total_movement = 0;
     int i, pos;
@@ -53,15 +39,13 @@ int cscan(int requests[], int n, int head) {
         head = requests[i];
     }
 
-    // jump from 499 to 0 (circular move)
     printf(" -> %d", DISK_SIZE - 1);
-    total_movement += (DISK_SIZE - 1 - head); // move to 499 from current head
-    total_movement += (DISK_SIZE - 1);        // jump 499→0
+    total_movement += (DISK_SIZE - 1 - head); 
+    total_movement += (DISK_SIZE - 1);        
     printf(" -> %d", 0);
 
     head = 0;
 
-    // continue serving remaining requests
     for (i = 0; i < pos; i++) {
         printf(" -> %d", requests[i]);
         total_movement += abs(requests[i] - head);
@@ -74,8 +58,6 @@ int cscan(int requests[], int n, int head) {
     return total_movement;
 }
 
-// Function for C-LOOK scheduling
-// Motion : from current head to highest request, jump to lowest request, then to remaining requests
 int clook(int requests[], int n, int head) {
     int total_movement = 0;
     int i, pos;
@@ -99,7 +81,6 @@ int clook(int requests[], int n, int head) {
         head = requests[i];
     }
 
-    // jump directly to the lowest request (not to 0)
     if (pos > 0) {
         total_movement += abs(head - requests[0]);
         head = requests[0];
@@ -146,10 +127,6 @@ int main() {
 
     return 0;
 }
-
-// C-Look and LOOK Difference: 
-// C-Look is a more efficient version of LOOK, as it only services requests in one direction and jumps back to the beginning without going to the end of the disk.
-// This reduces the overall seek time and improves performance, especially in systems with a high number of requests.
 
 // C-Scan and SCAN Difference:
 // C-Scan treats the disk as a circular list, servicing requests in one direction and jumping back to the start without servicing requests on the return trip.
