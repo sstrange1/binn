@@ -1,14 +1,3 @@
-/* Implement and compare the total head movement for a given sequence of disk requests using two 
-specific scheduling algorithms: 
-• System Setup: A disk with cylinders numbered 0 to 499. 
-• Current Head Position: 185 
-• Pending Requests (FIFO order): 20, 229, 39, 450, 18, 145, 120, 380, 20, 250 
-• Algorithms to Implement: 
-• SCAN (Assume initial movement is towards 499). 
-• LOOK (Assume initial movement is towards 499). 
-• Output: Calculate and display the sequence of cylinder movements and the Average Seek Distance 
-for both SCAN and LOOK. Conclude which algorithm performed better for this request set.*/
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,8 +15,6 @@ void sort(int arr[], int n) {
             }
 }
 
-// SCAN Disk Scheduling
-// Motion : from current head to 499, then reverse to 0
 void scan(int req[], int n, int head) {
     int total = 0;
     sort(req, n);
@@ -61,8 +48,6 @@ void scan(int req[], int n, int head) {
     printf("\nAverage Seek Distance: %.2f\n", (float)total / n);
 }
 
-// LOOK Disk Scheduling
-// Motion : from current head to highest request, then reverse to lowest request
 void look(int req[], int n, int head) {
     int total = 0;
     sort(req, n);
@@ -107,6 +92,3 @@ int main() {
 
     return 0;
 }
-
-// Out of look scan cscan clook arrange with efficiency
-// order with total movement : 
