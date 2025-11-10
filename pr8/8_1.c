@@ -127,7 +127,3 @@ int main() {
 
     return 0;
 }
-
-// C-Scan and SCAN Difference:
-// C-Scan treats the disk as a circular list, servicing requests in one direction and jumping back to the start without servicing requests on the return trip.
-// This can lead to more uniform wait times for requests compared to SCAN, which services requests in both directions.
